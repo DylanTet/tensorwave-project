@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import type { CompanyOverview, TimeSeriesResponse } from '@/types/stock';
+import type { TimeSeriesResponse } from '@/types/stock';
 
 export async function GET(
   request: NextRequest,

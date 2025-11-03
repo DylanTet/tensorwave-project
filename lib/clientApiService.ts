@@ -1,4 +1,4 @@
-import type { CompanyOverview, HistoricalPrice, TimeSeriesResponse } from '@/types/stock';
+import type { CompanyOverview, TimeSeriesResponse } from '@/types/stock';
 
 export class ApiService {
   private static readonly BASE_URL = '/api/stock';
@@ -7,6 +7,8 @@ export class ApiService {
     const response = await fetch(url);
 
     if (!response.ok) {
+                                            // Catch any non json responses with 
+                                            // empty object to prevent throw
       const errorData = await response.json().catch(() => ({}));
       throw new Error(
         errorData.error || `API request failed with status ${response.status}`
@@ -14,7 +16,6 @@ export class ApiService {
     }
 
     const data = await response.json();
-    
     if (data && typeof data === 'object' && 'error' in data) {
       throw new Error(data.error as string);
     }
