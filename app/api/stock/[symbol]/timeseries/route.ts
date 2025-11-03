@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ApiService } from '@/lib/clientApiService';
-import type { CompanyOverview } from '@/types/stock';
+import type { CompanyOverview, TimeSeriesResponse } from '@/types/stock';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { symbol: string } }
-): Promise<NextResponse<CompanyOverview | { error: string }>> {
+  context: { params: Promise<{ symbol: string }> }
+): Promise<NextResponse<TimeSeriesResponse | { error: string }>> {
   try {
-    const { symbol } = await params;
+    const { symbol } = await context.params;
     
     if (!symbol) {
       return NextResponse.json(

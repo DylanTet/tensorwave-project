@@ -1,3 +1,0 @@
-{
-  "/api/stock/[symbol]/timeseries/route": "app/api/stock/[symbol]/timeseries/route.js"
-}

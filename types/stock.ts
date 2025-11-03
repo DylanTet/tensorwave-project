@@ -15,21 +15,21 @@ export interface CompanyOverview {
   MarketCapitalization: string;
 }
 
-export interface TimeSeriesDaily {
-  [date: string]: {
+export interface ChartDataPoint {
+  date: string;
+  price: number;
+  percentChange: number;
+  volume: string;
+}
+
+export interface TimeSeriesDailyDataResponse {
+  [date: string] : {
     '1. open': string;
     '2. high': string;
     '3. low': string;
     '4. close': string;
     '5. volume': string;
-  };
-}
-
-export interface ChartDataPoint {
-  date: Date;
-  price: number;
-  percentChange: number;
-  volume: number;
+  }
 }
 
 export interface TimeSeriesResponse {
@@ -40,7 +40,7 @@ export interface TimeSeriesResponse {
     '4. Output Size': string;
     '5. Time Zone': string;
   };
-  'Time Series (Daily)': TimeSeriesDaily;
+  'Time Series (Daily)': TimeSeriesDailyDataResponse;
 }
 
 export interface HistoricalPrice {

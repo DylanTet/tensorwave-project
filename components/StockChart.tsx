@@ -1,7 +1,7 @@
 'use client';
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import type { ChartDataPoint, HistoricalPrice, TimeSeriesDaily } from '@/types/stock';
+import type { ChartDataPoint } from '@/types/stock';
 
 interface StockChartProps {
   prices: ChartDataPoint[]; 

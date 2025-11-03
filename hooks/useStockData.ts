@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ApiService } from '@/lib/clientApiService';
-import type { ChartDataPoint, CompanyOverview, TimeSeriesDaily, TimeSeriesResponse } from '@/types/stock';
+import type { ChartDataPoint, CompanyOverview } from '@/types/stock';
 
 interface UseStockDataResult {
   overview: CompanyOverview | null;
@@ -10,15 +10,7 @@ interface UseStockDataResult {
   isLoading: boolean;
   error: string | null;
 }
-interface TimeSeriesDataEntry {
-  date: string;
-  data: TimeSeriesDaily
-}
-/**
- * Custom hook for fetching stock data from our API routes
- * @param symbol - Stock symbol (e.g., "AAPL")
- * @returns Object containing overview, historical prices, loading state, and error
- */
+
 export function useStockData(symbol: string): UseStockDataResult {
   const [overview, setOverview] = useState<CompanyOverview | null>(null);
   const [historicalPrices, setHistoricalPrices] = useState<ChartDataPoint[] | null>(null);
@@ -36,19 +28,20 @@ export function useStockData(symbol: string): UseStockDataResult {
         const data = await ApiService.getStockData(symbol);
         setOverview(data.overview);
 
-        let prevEntry: TimeSeriesDataEntry;
+        let prevEntry = data.historicalPrices['Time Series (Daily)'][0];
         const chartData: ChartDataPoint[] = Object.entries(data.historicalPrices['Time Series (Daily)'])
           .reverse()
-          .map(([date, value], index) => {
+          .map(([date, value], _) => {
           const price = parseFloat(value['4. close']);
-          const previousPrice = prevEntry ? parseFloat(prevEntry.data['4. close']) : null;
+          const previousPrice = prevEntry ? parseFloat(prevEntry['4. close']) : null;
           const volume = value['5. volume'];
 
           const percentChange =
             previousPrice !== null
               ? ((price - previousPrice) / previousPrice) * 100
               : 0; // 0% for first day
-          prevEntry = {date: date, data: value};
+          prevEntry = value;
+
           return {
             date: new Date(date).toLocaleDateString('en-US', {
               month: 'short',

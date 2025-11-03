@@ -3,10 +3,10 @@ import type { CompanyOverview } from '@/types/stock';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { symbol: string } }
+  context: { params: Promise<{ symbol: string }> }
 ): Promise<NextResponse<CompanyOverview | { error: string }>> {
   try {
-    const { symbol } = await params;
+    const { symbol } = await context.params;
     
     if (!symbol) {
       return NextResponse.json(

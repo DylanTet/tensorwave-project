@@ -23,7 +23,6 @@ export class ApiService {
   }
 
   static async getCompanyOverview(symbol: string): Promise<CompanyOverview> {
-    console.log(symbol)
     return this.fetchApi<CompanyOverview>(
       `${this.BASE_URL}/${symbol}/overview`
     );

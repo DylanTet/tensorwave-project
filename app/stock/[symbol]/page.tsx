@@ -98,12 +98,13 @@ function HistoricalPricesTable({ prices }: { prices: ChartDataPoint[] }) {
             {prices
               .map((data, index) => (
               <tr
-                key={data.date}
+                key={index}
                 className="border-b border-white/10 hover:bg-white/5 transition-colors"
               >
-                <td className="py-3 px-4 text-white">{data.date}</td>
+                <td className="py-3 px-4 text-white">{data.date}
+                </td>
                 <td className="py-3 px-4 text-white text-right">
-                    {data.price}
+                  {data.price}
                 </td>
                 <td className="py-3 px-4 text-gray-300 text-right">
                   {data.volume}
